@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Tarefas')),
+        appBar: AppBar(
+            leading: Container(),
+            title: Text('Tarefas')),
         body: ListView(
           children: [
             Task(
@@ -42,7 +44,7 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
-  int nivel = 1;
+  int nivel = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +73,27 @@ class _TaskState extends State<Task> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            nivel++;
-                          });
-                          print(nivel);
-                        },
-                        child: Icon(Icons.arrow_drop_up),
+                      Container(
+                        height: 52,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              nivel++;
+                            });
+                            print(nivel);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Icon(Icons.arrow_drop_up),
+                              Text(
+                                'UP',
+                                style: TextStyle(color: Colors.black26),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
