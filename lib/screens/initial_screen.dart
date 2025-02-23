@@ -1,4 +1,5 @@
 import 'package:firstappflutter/components/task.dart';
+import 'package:firstappflutter/data/task_inherited.dart';
 import 'package:firstappflutter/screens/form_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,26 +16,14 @@ class _InitialScreenState extends State<InitialScreen> {
     return Scaffold(
       appBar: AppBar(leading: Container(), title: Text('Tarefas')),
       body: ListView(
-        children: [
-          Task('Aprender Flutter', 'assets/images/Eu7m692XIAEvxxP.png', 3),
-          Task(
-            'Andar de Bike',
-            'assets/images/cycling-bike-trail-sport-161172.jpeg',
-            2,
-          ),
-          Task(
-            'Meditar',
-            'assets/images/Top-5-Scientific-Findings-on-MeditationMindfulness-881x710.jpeg',
-            5,
-          ),
-          SizedBox(height: 80),
-        ],
+        children: TaskInherited.of(context).taskList,
+        padding: EdgeInsets.only(top: 8, bottom: 70),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FormScreen()),
+            MaterialPageRoute(builder: (contextNew) => FormScreen(taskContext: context,)),
           );
         },
         child: Icon(Icons.add),

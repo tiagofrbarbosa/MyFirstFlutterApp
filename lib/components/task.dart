@@ -7,14 +7,23 @@ class Task extends StatefulWidget {
   final String foto;
   final int dificuldade;
 
-  const Task(this.nome,this.foto,this.dificuldade,{super.key});
+  Task(this.nome, this.foto, this.dificuldade, {super.key});
+
+  int nivel = 0;
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  int nivel = 0;
+
+  bool assetOrNetwork() {
+    if (widget.foto.contains('http')) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +32,12 @@ class _TaskState extends State<Task> {
       child: Stack(
         children: [
           Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
-                color: Colors.blue,),
-              height: 140),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color: Colors.blue,
+            ),
+            height: 140,
+          ),
           Column(
             children: [
               Container(
@@ -38,12 +50,19 @@ class _TaskState extends State<Task> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
-                        color: Colors.black26,),
-                      width: 72, height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.black26,
+                      ),
+                      width: 72,
+                      height: 100,
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.asset(widget.foto,fit: BoxFit.cover)),
+                        borderRadius: BorderRadius.circular(4),
+                        child:
+                            assetOrNetwork()
+                                ? Image.asset(widget.foto, fit: BoxFit.cover)
+                                : Image.network(widget.foto, fit: BoxFit.cover),
+                      ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +78,7 @@ class _TaskState extends State<Task> {
                             ),
                           ),
                         ),
-                        Difficulty(widget: widget)
+                        Difficulty(widget: widget),
                       ],
                     ),
                     SizedBox(
@@ -67,7 +86,7 @@ class _TaskState extends State<Task> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            nivel++;
+                            widget.nivel++;
                           });
                         },
                         child: Column(
@@ -75,10 +94,7 @@ class _TaskState extends State<Task> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Icon(Icons.arrow_drop_up),
-                            Text(
-                              'UP',
-                              style: TextStyle(color: Colors.black26),
-                            ),
+                            Text('UP', style: TextStyle(color: Colors.black26)),
                           ],
                         ),
                       ),
@@ -95,13 +111,17 @@ class _TaskState extends State<Task> {
                       width: 200,
                       child: LinearProgressIndicator(
                         color: Colors.white,
-                        value: (widget.dificuldade > 0) ? (nivel/widget.dificuldade) / 10 : 1,),
+                        value:
+                            (widget.dificuldade > 0)
+                                ? (widget.nivel / widget.dificuldade) / 10
+                                : 1,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Nível $nivel',
+                      'Nível ${widget.nivel}',
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
