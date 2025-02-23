@@ -132,6 +132,7 @@ class _FormScreenState extends State<FormScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Salvando nova tarefa')),
                         );
+                        Navigator.pop(context);
                       }
                     },
                     child: Text('Adicionar'),
