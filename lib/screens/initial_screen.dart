@@ -16,7 +16,9 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: Container(), title: Text('Tarefas')),
+      appBar: AppBar(leading: Container(),
+          actions: [IconButton(onPressed: (){setState(() {});}, icon: Icon(Icons.refresh))],
+          title: Text('Tarefas')),
       body: Padding(
         padding: EdgeInsets.only(top: 8, bottom: 70),
         child: FutureBuilder<List<Task>>(
@@ -86,7 +88,7 @@ class _InitialScreenState extends State<InitialScreen> {
             MaterialPageRoute(
               builder: (contextNew) => FormScreen(taskContext: context),
             ),
-          );
+          ).then((value) => setState(() {}));
         },
         child: Icon(Icons.add),
       ),
